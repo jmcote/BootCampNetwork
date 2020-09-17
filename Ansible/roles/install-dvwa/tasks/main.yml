@@ -1,0 +1,29 @@
+#Install DVWA on a server
+
+- name: Install docker  (state=present is optional)
+  apt:
+    name: docker.io
+    state: present
+
+- name: Install python 3 and pip  (state=present is optional)
+  apt:
+    name: python3-pip
+    state: present
+
+- name: Install docker  (state=present is optional)
+  pip:
+    name: docker
+
+- name: use dvwa docker image
+  docker_container:
+    name: dvwa
+    image: cyberxsecurity/dvwa
+    state: started
+    published_ports: 80:80
+    restart_policy: always
+
+- name: Make sure a service is running
+  systemd:
+    enabled: yes
+    state: started
+    name: docker

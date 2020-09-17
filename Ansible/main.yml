@@ -1,0 +1,15 @@
+---
+- hosts: elkservers
+  remote_user: elk
+  become: True
+#  restart_policy: always
+  roles:
+  - install-elk
+
+- hosts: webservers
+  become: True
+#  restart_policy: always
+  roles:
+  - install-dvwa
+  - install-filebeat
+  #- install-metricbeat
